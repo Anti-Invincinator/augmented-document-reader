@@ -32,6 +32,16 @@ pip install -r requirements.txt
 ```
 
 ### Add API keys to .env file
+```txt
+# Copy to .env and fill in your keys
+GEMINI_API_KEY=your_gemini_key_here
+OPENAI_API_KEY=your_openai_key_here
+
+# Optional model overrides
+# PDF_PROVIDER=gemini        # or 'openai'
+# PDF_MODEL_GEMINI=gemini-1.5-flash
+# PDF_MODEL_OPENAI=gpt-4o-mini
+```
 
 ### Run API
 ```bash
@@ -46,6 +56,7 @@ Open index.html in your browser (double-click the file).
 Pick Document type, (for PDF) choose LLM provider, select a file, click Extract.
 
 ## 2) Project Structure
+```graphql
 .
 ├─ main.py               # Central FastAPI app: /api/extract + /health
 ├─ pdf_utils.py          # PDF → Gemini or GPT (JSON-only output)
@@ -55,6 +66,7 @@ Pick Document type, (for PDF) choose LLM provider, select a file, click Extract.
 ├─ requirements.txt
 ├─ .env.example          # Copy to .env and fill API keys
 └─ .gitignore
+```
 
 ## 3) API
 POST /api/extract
