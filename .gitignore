@@ -1,0 +1,79 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.dll
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.coverage*
+htmlcov/
+.mypy_cache/
+.pytype/
+.cache/
+
+# --- Virtual envs ---
+.venv/
+venv/
+ENV/
+env/
+
+# --- Env / secrets ---
+.env
+.env.*
+*.env
+
+# --- Editors & OS ---
+.vscode/
+.idea/
+*.code-workspace
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Logs & temp ---
+*.log
+logs/
+tmp/
+temp/
+__temp__/
+
+# --- App artifacts (adjust as needed) ---
+artifacts/
+outputs/
+data/  # if you store local samples; remove if you want tracked
+
+# --- Hugging Face / transformers caches ---
+.huggingface/
+# user-level caches if placed under repo
+.cache/
+transformers_cache/
+
+# --- LaTeX build artifacts ---
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+_minted*
+
+# --- Node (future frontend) ---
+node_modules/
+
+# --- Archives ---
+*.zip
+*.7z
+*.tar
+*.tar.gz

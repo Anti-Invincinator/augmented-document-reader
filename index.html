@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>CMI Finance NER — PoC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    body { margin:0; background:#0f172a; color:#e2e8f0; min-height:100vh; display:grid; place-items:center; }
+    .card { width:min(940px,95vw); background:#111827; padding:22px; border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,.35); }
+    h1 { margin:0 0 6px; font-size:20px; }
+    .row { display:flex; gap:10px; align-items:center; margin:10px 0; flex-wrap:wrap; }
+    select, input[type=file] { padding:10px; background:#0b1220; border-radius:10px; border:1px solid #1f2937; color:#e2e8f0; }
+    button { padding:10px 14px; border:none; border-radius:10px; background:#2563eb; color:white; cursor:pointer; }
+    button:disabled { background:#334155; cursor:not-allowed; }
+    pre { background:#0b1220; padding:14px; border-radius:10px; overflow:auto; max-height:55vh; }
+    label { font-size:14px; opacity:.9; margin-right:6px; }
+    .hint { font-size:12px; opacity:.8; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>CMI Finance NER — Unified API</h1>
+    <div class="row">
+      <label>Document type</label>
+      <select id="docType">
+        <option value="pdf">PDF (LLM)</option>
+        <option value="docx">DOCX (rule-based)</option>
+        <option value="chat">Chat/TXT (NER)</option>
+      </select>
+
+      <label>LLM (PDF only)</label>
+      <select id="provider">
+        <option value="gemini" selected>Gemini</option>
+        <option value="openai">GPT</option>
+      </select>
+
+      <input id="file" type="file" />
+      <button id="go">Extract</button>
+    </div>
+    <div class="hint">For PDFs you can switch Gemini ↔ GPT. For DOCX and Chat the app uses their specialized parsers.</div>
+    <h3>Response</h3>
+    <pre id="out">— no response yet —</pre>
+  </div>
+
+  <script>
+    const out = document.getElementById('out');
+    const go  = document.getElementById('go');
+    const fileInput = document.getElementById('file');
+    const docTypeEl = document.getElementById('docType');
+    const providerEl = document.getElementById('provider');
+
+    docTypeEl.addEventListener('change', () => {
+      // Toggle provider selector visibility
+      providerEl.disabled = (docTypeEl.value !== 'pdf');
+    });
+    providerEl.disabled = (docTypeEl.value !== 'pdf');
+
+    async function extract() {
+      const f = fileInput.files?.[0];
+      if (!f) { out.textContent = "Pick a file first."; return; }
+
+      const form = new FormData();
+      form.append("file", f, f.name);
+      form.append("doc_type", docTypeEl.value);
+      if (docTypeEl.value === "pdf") {
+        form.append("provider", providerEl.value); // "gemini" or "openai"
+        // form.append("model", "gpt-4o-mini"); // optional override example
+      }
+
+      go.disabled = true; out.textContent = "Uploading…";
+      try {
+        const res = await fetch("http://localhost:8000/api/extract", { method: "POST", body: form });
+        const json = await res.json();
+        out.textContent = JSON.stringify(json, null, 2);
+      } catch (e) {
+        out.textContent = "Error: " + e;
+      } finally {
+        go.disabled = false;
+      }
+    }
+
+    go.addEventListener('click', extract);
+  </script>
+</body>
+</html>
