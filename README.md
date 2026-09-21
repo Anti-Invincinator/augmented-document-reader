@@ -1,3 +1,11 @@
+<div align="center">
+
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1200&color=4285F4&center=true&vCenter=true&width=650&lines=Augmented+Document+Reader+%F0%9F%93%84;Financial+Entity+Extraction+via+LLMs" alt="Typing SVG" />
+
+[![by Dravid](https://img.shields.io/badge/by-Dravid-4285F4?style=flat-square)](https://github.com/Anti-Invincinator)
+
+</div>
+
 # CMI Finance Document Reader — PoC
 
 Single FastAPI service that extracts entities from **PDF/DOCX/Chat**:
